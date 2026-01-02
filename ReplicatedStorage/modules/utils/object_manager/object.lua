@@ -21,6 +21,13 @@ export type basic_object_data = typeof(object)
 
 export type object_data<k> = basic_object_data & k
 
+local function add_override(base_table:{any},override:{any})
+	for i,v in override do
+		base_table[i] = v
+	end
+end
+
+
 function object.new<new_data>(object_data:new_data|basic_object_data)
 	--local obj = 
 	object_data.methods = object_data.methods or {}
@@ -58,16 +65,15 @@ function object.add_methods<object,methods>(self:object,methods:methods)
 end
 
 
+
 function object.add_properties<object,new_properties>(self:object,new_properties:new_properties)
 local self:object&object_data<object> = self
 
 	local properties = self.properties
 
 	type properties = typeof(properties)
-	for i,v in new_properties do
-		
-		properties[i] = v
-	end
+	add_override(properties,new_properties)
+
 	type newer_properties =  new_properties
 	local properties:newer_properties = properties
 	
@@ -87,11 +93,9 @@ function object.add_events<object,new_events>(self:object,new_events:new_events)
 	local events = self.events
 	
 
-	type properties = typeof(properties)
-	for i,v in new_events do
+	type events = typeof(properties)
+	add_override(events,new_events)
 
-		properties[i] = v
-	end
 
 	local events:new_events = events
 
@@ -103,7 +107,13 @@ function object.add_events<object,new_events>(self:object,new_events:new_events)
 	return self
 end
 
+function object.add_data<object,new_data>(self:object,new_data:new_data)
+	local self:object&object_data<object> = self
+	add_override(self,new_data)
+	local self:typeof(self) & new_data = self
+	return self 
 
+end
 
 
 function object:clone()
