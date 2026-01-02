@@ -26,7 +26,8 @@ local player = object.new {
 	properties = {
 		linked_player = faux_player
 	},
-	class_name = "player"
+	class_name = "player",
+	try = true
 	
 }
 
@@ -41,11 +42,11 @@ local player = player.add_events(player,{
 })
 templates.player = player
 local joined = player.events.joined
-joined:connect(function()
-	
+joined:connect(function(inp:number)
+	print("join",inp)
 end)
 
-
+local player = player.remove_data(player,"try")
 
 
 
