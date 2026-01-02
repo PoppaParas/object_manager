@@ -19,6 +19,8 @@ function object_manager.get_template<k>(template:k|keyof<templates>)
 	return templates[template]
 end
 
+object_manager.templates = templates
+
 object_manager.event_manager = event_manager
 
 -- good shit bro 🔥
