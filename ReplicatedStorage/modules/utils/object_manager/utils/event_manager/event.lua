@@ -82,7 +82,7 @@ function event:once<provided_args...>(connection:(provided_args...)->(...any))
 		connection()
 		table.remove(function_list,table.find(function_list,new_func()))
 	end
-	event:connect(new_func)
+	self:connect(new_func)
 end
 
 function event:destroy()
