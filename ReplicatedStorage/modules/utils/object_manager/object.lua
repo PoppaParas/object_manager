@@ -116,6 +116,19 @@ function object.add_data<object,new_data>(self:object,new_data:new_data)
 end
 
 
+
+function object.remove_data<object,name>(self:object,name:name|keyof<object>)
+	
+	local self:object&object_data<object> = self
+	self[name] = nil
+	local self:{
+		[name]:nil	
+	} | typeof(self)  = self
+	return self 
+
+end
+
+
 function object:clone()
 	return table.deep_clone(self)
 end
